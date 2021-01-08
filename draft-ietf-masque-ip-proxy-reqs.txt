@@ -5,8 +5,8 @@
 Network Working Group                                  A. Chernyakhovsky
 Internet-Draft                                                 D. McCall
 Intended status: Informational                               D. Schinazi
-Expires: 17 April 2021                                        Google LLC
-                                                         14 October 2020
+Expires: 12 July 2021                                         Google LLC
+                                                          8 January 2021
 
 
          Requirements for a MASQUE Protocol to Proxy IP Traffic
@@ -45,22 +45,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 April 2021.
-
-
-
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 1]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
+   This Internet-Draft will expire on 12 July 2021.
 
 Copyright Notice
 
-   Copyright (c) 2020 IETF Trust and the persons identified as the
+   Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -74,49 +63,42 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-     1.1.  Conventions . . . . . . . . . . . . . . . . . . . . . . .   3
-     1.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .   3
-   2.  Use Cases . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     2.1.  Consumer VPN  . . . . . . . . . . . . . . . . . . . . . .   4
-     2.2.  Point to Point Connectivity . . . . . . . . . . . . . . .   4
-     2.3.  Point to Network Connectivity . . . . . . . . . . . . . .   4
-     2.4.  Network to Network Connectivity . . . . . . . . . . . . .   4
-   3.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.1.  IP Session Establishment  . . . . . . . . . . . . . . . .   5
-     3.2.  Proxying of IP packets  . . . . . . . . . . . . . . . . .   5
-     3.3.  Maximum Transmission Unit . . . . . . . . . . . . . . . .   5
-     3.4.  IP Assignment . . . . . . . . . . . . . . . . . . . . . .   5
-     3.5.  Route Negotiation . . . . . . . . . . . . . . . . . . . .   5
-     3.6.  Identity  . . . . . . . . . . . . . . . . . . . . . . . .   5
-     3.7.  Transport Security  . . . . . . . . . . . . . . . . . . .   6
-     3.8.  Authentication  . . . . . . . . . . . . . . . . . . . . .   6
-     3.9.  Reliable Transmission of IP Packets . . . . . . . . . . .   6
-     3.10. Flow Control  . . . . . . . . . . . . . . . . . . . . . .   6
-     3.11. Indistinguishability  . . . . . . . . . . . . . . . . . .   6
-     3.12. Support HTTP/2 and HTTP/3 . . . . . . . . . . . . . . . .   7
-     3.13. Multiplexing  . . . . . . . . . . . . . . . . . . . . . .   7
-     3.14. Load balancing  . . . . . . . . . . . . . . . . . . . . .   7
-     3.15. Extensibility . . . . . . . . . . . . . . . . . . . . . .   7
-   4.  Non-requirements  . . . . . . . . . . . . . . . . . . . . . .   7
-     4.1.  Addressing Architecture . . . . . . . . . . . . . . . . .   8
-     4.2.  Translation . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.3.  IP Packet Extraction  . . . . . . . . . . . . . . . . . .   8
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .   8
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 2]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
-
-     Normative References  . . . . . . . . . . . . . . . . . . . . .   9
-     Informative References  . . . . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+   1.  Introduction
+     1.1.  Conventions
+     1.2.  Definitions
+   2.  Use Cases
+     2.1.  Consumer VPN
+     2.2.  Point to Point Connectivity
+     2.3.  Point to Network Connectivity
+     2.4.  Network to Network Connectivity
+   3.  Requirements
+     3.1.  IP Session Establishment
+     3.2.  Proxying of IP packets
+     3.3.  Maximum Transmission Unit
+     3.4.  IP Assignment
+     3.5.  Route Negotiation
+     3.6.  Identity
+     3.7.  Transport Security
+     3.8.  Authentication
+     3.9.  Reliable Transmission of IP Packets
+     3.10. Flow Control
+     3.11. Indistinguishability
+     3.12. Support HTTP/2 and HTTP/3
+     3.13. Multiplexing
+   4.  Extensibility
+     4.1.  General Capability
+     4.2.  Load balancing
+   5.  Non-requirements
+     5.1.  Addressing Architecture
+     5.2.  Translation
+     5.3.  IP Packet Extraction
+   6.  Security Considerations
+   7.  IANA Considerations
+   Acknowledgments
+   References
+     Normative References
+     Informative References
+   Authors' Addresses
 
 1.  Introduction
 
@@ -156,19 +138,8 @@ Internet-Draft          IP Proxying Requirements            October 2020
    *  IP Session: An association between client and server whereby both
       agree to proxy IP traffic given certain configuration properties.
       This is similar to a Child Security Association in IKEv2
-      terminology.
-
-
-
-
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 3]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
+      terminology.  An IP Session uses a particular Data Transport to
+      transmit packets.
 
 2.  Use Cases
 
@@ -219,13 +190,6 @@ Internet-Draft          IP Proxying Requirements            October 2020
    This section lists requirements for a protocol that can proxy IP over
    an HTTP connection.
 
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 4]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
-
 3.1.  IP Session Establishment
 
    The protocol will allow the client to request establishment of an IP
@@ -236,8 +200,10 @@ Internet-Draft          IP Proxying Requirements            October 2020
 3.2.  Proxying of IP packets
 
    The protocol will establish Data Transports, which will be able to
-   forward IP packets, in their unmodified entirety.  The protocol will
-   support both IPv6 [IPV6] and IPv4 [IPV4].
+   forward IP packets.  The data transports must be able to forward
+   packets in their unmodified entirety, although extensions may enable
+   the use of modified packet formats (e.g., compression).  The protocol
+   will support both IPv6 [IPV6] and IPv4 [IPV4].
 
 3.3.  Maximum Transmission Unit
 
@@ -251,10 +217,9 @@ Internet-Draft          IP Proxying Requirements            October 2020
    The client will be able to request to be assigned an IP address
    range, optionally specifying a preferred range.  In response to that
    request, the server will either assign a range of its choosing to the
-   client, or decline the request.  Similarly, to support the network-
-   to-network use case, the server will be able to request assignment of
-   an IP address range from the client, and the client will either
-   assign a range or decline the request.
+   client, or decline the request.  For symmetry, the server may request
+   assignment of an IP address range from the client, and the client
+   will either assign a range or decline the request.
 
 3.5.  Route Negotiation
 
@@ -273,15 +238,6 @@ Internet-Draft          IP Proxying Requirements            October 2020
    cover authenticating the identifier; that requirement is covered by
    Section 3.8.
 
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 5]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
-
 3.7.  Transport Security
 
    The protocol MUST be run over a protocol that provides mutual
@@ -292,11 +248,11 @@ Internet-Draft          IP Proxying Requirements            October 2020
 
    Additionally to the authentication provided by the transport, the
    protocol will have the ability to authenticate both client and server
-   during the establishment of the IP Session.  In particular, it will
-   be possible for the client to offer an OAuth Access Token [OAUTH] to
-   the server when requesting IP proxying, potentially through an
-   extension of the protocol.  The protocol will also have the ability
-   to support vendor-specific authentication mechanisms as extensions.
+   during the establishment of the IP Session.  For example, a client
+   may offer an OAuth Access Token [OAUTH] to the server when requesting
+   IP proxying, potentially through an extension of the protocol.  The
+   protocol will also have the ability to support vendor-specific
+   authentication mechanisms as extensions.
 
 3.9.  Reliable Transmission of IP Packets
 
@@ -317,26 +273,11 @@ Internet-Draft          IP Proxying Requirements            October 2020
 3.11.  Indistinguishability
 
    A passive network observer not participating in the encrypted
-   connection should not be able to distinguish an IP proxying session
+   connection should not be able to distinguish an proxying IP session
    from regular encrypted HTTP Web traffic.  Specifically, any data sent
    unencrypted (such as headers, or parts of the handshake) should look
    like the same unencrypted data that would be present for Web traffic.
    Traffic analysis is out of scope for this requirement.
-
-
-
-
-
-
-
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 6]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
 
 3.12.  Support HTTP/2 and HTTP/3
 
@@ -354,19 +295,9 @@ Internet-Draft          IP Proxying Requirements            October 2020
    multiple independent instances of IP proxying over a given HTTP
    connection.
 
-3.14.  Load balancing
+4.  Extensibility
 
-   Clients and servers should each be able to instantiate new Data
-   Transports.  This facilitates multi-threaded servers being able to
-   handle a higher bandwidth of IP proxied packets.
-
-   The IP proxying mechanisms need to support load balancing of the
-   traffic sent across the session, such as to another server.  The
-   document defining the new protocol should provide guidance for when
-   additional connections and/or sessions should be opened, as opposed
-   to reusing existing ones.
-
-3.15.  Extensibility
+4.1.  General Capability
 
    The protocol will provide a mechanism by which clients and servers
    can add extension information to the exchange that establishes the IP
@@ -377,24 +308,23 @@ Internet-Draft          IP Proxying Requirements            October 2020
    mechanism that allows reliably exchanging vendor-specific messages in
    both directions at any point in the lifetime of the IP Session.
 
-4.  Non-requirements
+4.2.  Load balancing
+
+   The IP proxying mechanisms should allow for load balancing of the
+   traffic sent across the session, such as to another server.  This
+   allows the IP proxying mechanicsms to scale-out to multiple servers.
+   This capability may be implemented as one or more extensions.  The
+   document defining the new capability/extension should provide
+   guidance for when additional connections and/or sessions should be
+   opened, as opposed to reusing existing ones.
+
+5.  Non-requirements
 
    This section discusses topics that are explicitly out of scope for
    the IP Proxying protocol.  These topics MAY be handled by
    implementers or future extensions.
 
-
-
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 7]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
-
-4.1.  Addressing Architecture
+5.1.  Addressing Architecture
 
    This document only describes the requirements for a protocol that
    allows IP proxying.  It does not discuss how the IPs assigned are
@@ -403,7 +333,7 @@ Internet-Draft          IP Proxying Requirements            October 2020
    handled by the protocol beyond the ability to convey those
    assignments.
 
-4.2.  Translation
+5.2.  Translation
 
    Some servers may wish to perform Network Address Translation (NAT) or
    any other modification to packets they forward.  Doing so is out of
@@ -419,19 +349,19 @@ Internet-Draft          IP Proxying Requirements            October 2020
    and expected to be performed by a router behind the MASQUE server, or
    collocated with it.
 
-4.3.  IP Packet Extraction
+5.3.  IP Packet Extraction
 
    How packets are forwarded between the IP proxying connection and the
    physical network is out of scope.  This is deliberately not specified
    and will be left to individual implementations.
 
-5.  Security Considerations
+6.  Security Considerations
 
    This document only discusses requirements on a protocol that allows
    IP proxying.  That protocol will need to document its security
    considerations.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document requests no actions from IANA.
 
@@ -441,14 +371,6 @@ Acknowledgments
    group for their feedback.
 
 References
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 8]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
 
 Normative References
 
@@ -465,8 +387,8 @@ Normative References
 
    [H3]       Bishop, M., "Hypertext Transfer Protocol Version 3
               (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
-              quic-http-31, 24 September 2020, <http://www.ietf.org/
-              internet-drafts/draft-ietf-quic-http-31.txt>.
+              quic-http-33, 15 December 2020, <http://www.ietf.org/
+              internet-drafts/draft-ietf-quic-http-33.txt>.
 
    [IPV4]     Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC0791, September 1981,
@@ -479,9 +401,9 @@ Normative References
 
    [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
               and Secure Transport", Work in Progress, Internet-Draft,
-              draft-ietf-quic-transport-31, 24 September 2020,
+              draft-ietf-quic-transport-33, 13 December 2020,
               <http://www.ietf.org/internet-drafts/draft-ietf-quic-
-              transport-31.txt>.
+              transport-33.txt>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -498,19 +420,11 @@ Normative References
 
 Informative References
 
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                 [Page 9]
-
-Internet-Draft          IP Proxying Requirements            October 2020
-
-
    [CONNECT-UDP]
               Schinazi, D., "The CONNECT-UDP HTTP Method", Work in
               Progress, Internet-Draft, draft-ietf-masque-connect-udp-
-              00, 28 August 2020, <http://www.ietf.org/internet-drafts/
-              draft-ietf-masque-connect-udp-00.txt>.
+              03, 5 January 2021, <http://www.ietf.org/internet-drafts/
+              draft-ietf-masque-connect-udp-03.txt>.
 
    [IKEV2]    Kaufman, C., Hoffman, P., Nir, Y., Eronen, P., and T.
               Kivinen, "Internet Key Exchange Protocol Version 2
@@ -548,13 +462,3 @@ Authors' Addresses
    United States of America
 
    Email: dschinazi.ietf@gmail.com
-
-
-
-
-
-
-
-
-
-Chernyakhovsky, et al.    Expires 17 April 2021                [Page 10]
