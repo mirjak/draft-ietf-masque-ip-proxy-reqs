@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-01-07T00:19:25.514641+00:00",
+  "timestamp": "2021-01-10T00:19:24.000707+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "MDU6SXNzdWU3Mjg0NDA4MTY=",
       "title": "Proxying a single IP address, or an IP subnet?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SpencerDawkins",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "There is a question whether \"IP proxying\" means proxying an IP subnet, as opposed to proxying a single IP address. \r\n\r\nThis question was discussed on the MASQUE mailing list during the adoption call for this draft. @DavidSchinazi asked me to open a Github issue for it. \r\n\r\nThe adoption call mail thread starts at https://mailarchive.ietf.org/arch/msg/masque/cpcXQVBjpMQLbHMGpyAJCucEg3A/. I believe the first e-mail to mention the question is Magnus's at https://mailarchive.ietf.org/arch/msg/masque/5k_IUw6-A8jQi3i_q1MOtZt5Hl8/.\r\n\r\n",
       "createdAt": "2020-10-23T18:39:36Z",
-      "updatedAt": "2020-11-11T12:49:06Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-08T15:56:44Z",
+      "closedAt": "2021-01-08T15:56:44Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -78,6 +78,13 @@
           "body": "@DavidSchinazi I think we should dig more into what the implications are of proxying a subnet compared to an address that comes from a range provided by the MASQUE server. I think these differences are significant and have impact on what is required for safe general deployment of the protocol. \r\n\r\nSo if one proxying a single IP address borrowed from the MASQUE server then;\r\n - Source Address validation is trivial, the MASQUE client's traffic will leave the MASQUE server with an address belonging to the MASQUE server so no risk of source address spoofing.\r\n - There are no routing considerations for the MASQUE server as the address use by the MASQUE server is not routed by the MASQUE server. \r\n\r\nFor a sub-net proxying the above concerns looks significantly different.\r\n - The MASQUE server does not own the IP subnet range and thus needs additional mechanism to determine if the MASQUE client is an actual gateway for that subnet or is simply spoofing that subnet.\r\n - The MASQUE server need to inject routes for the subnet upstream of it self to ensure that there are a return routability path. Such operations have significant operational concerns. \r\n\r\nThus, the security considerations and necessary security model for these operational concerns are very different from proxying individual IP address belonging to the MASQUE server. That is why I am arguing that this needs to be an extension in a separate document. \r\n\r\nI understand that in QBONE you have this functionality. But, this is a specific use case and deployment where you have considered how you in this specific model handle these cases. Thus the scope and the description necessary are different from single IP address proxying. For a standardized mechanism I hope you agree that these concerns needs to be raised and addressed through either limitations in applicability scope and/or solutions to the security threats of using the mechanism. \r\n\r\nThus can we put the subnet functionality as an extension where these additional scope and security aspects can be handled differently rather than trying to have them both in the same document. I also expect differences in progress due to the review and feedback necessary to bring the subnet parts to IETF consensus. ",
           "createdAt": "2020-11-11T12:49:05Z",
           "updatedAt": "2020-11-11T12:49:05Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:56:44Z",
+          "updatedAt": "2021-01-08T15:56:44Z"
         }
       ]
     },
@@ -102,127 +109,218 @@
       "id": "MDU6SXNzdWU3NDA3NTE5MTY=",
       "title": "In Network to Network proxying, why does the MASQUE Server need a subnet address?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Section 3.6: \r\n\r\n   Similarly, to support the network-\r\n   to-network use case, the server will be able to request assignment of\r\n   an IP address range from the client, and the client will either\r\n   assign a range or decline the request.\r\n\r\nCan you elaborate why the Server would need an IP address from the Client's network? The client will need to be a gateway in the client side network to be able to receive the traffic to forward, but I don't see why the server needs appear as that gateway?\r\n",
       "createdAt": "2020-11-11T13:05:56Z",
-      "updatedAt": "2020-11-11T13:05:56Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:56:49Z",
+      "closedAt": "2021-01-08T15:56:49Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:56:49Z",
+          "updatedAt": "2021-01-08T15:56:49Z"
+        }
+      ]
     },
     {
       "number": 4,
       "id": "MDU6SXNzdWU3NDA3NTI3MjA=",
       "title": "3.6.  Identity: Whay type of identity?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "B. Section 3.6:\r\n\r\nI do understand the need for some identify. The server first of all to allow the client to determine it is communicating with the right MASQUE server. However for the identification of the client, is that likely at all to be a domain name? Isn't that a user name, or some other form of authorization to use the resource. \r\n",
       "createdAt": "2020-11-11T13:07:16Z",
-      "updatedAt": "2020-11-11T13:07:16Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:56:52Z",
+      "closedAt": "2021-01-08T15:56:52Z",
+      "comments": [
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the client identity is free to be a username, token, email address, or some other identifier. As written, the text says \"For example, [...] a fully-qualified domain name.\".",
+          "createdAt": "2021-01-07T22:53:18Z",
+          "updatedAt": "2021-01-07T22:53:18Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:56:52Z",
+          "updatedAt": "2021-01-08T15:56:52Z"
+        }
+      ]
     },
     {
       "number": 5,
       "id": "MDU6SXNzdWU3NDA3NTQxMTQ=",
       "title": "Section 3.8: Authorization requirements",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "C. Section 3.8 in this context I think there are more than the MASQUE endpoint that needs authoriztion if network to network proxying would happen. Also, extension to OAUTH, doesn't that require work in another WG? It looks like more explanation of what the needs are that prompt the need for extending the authorization protocol. ",
       "createdAt": "2020-11-11T13:09:32Z",
-      "updatedAt": "2020-11-11T13:09:32Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:56:55Z",
+      "closedAt": "2021-01-08T15:56:55Z",
+      "comments": [
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't understand what you're asking for/suggesting here. Could you please elaborate what you mean when you say \"more [...] that needs authorization\"?\r\n\r\nI do not believe there needs to be an extension to OAuth, so I do not see why work would be needed in another WG. The current text uses OAuth as a possible implementation of authentication. I see now in the draft text that OAuth looks much more mandatory than it is itnended to be, so I'm working on text to correct that.",
+          "createdAt": "2021-01-07T20:31:56Z",
+          "updatedAt": "2021-01-07T20:31:56Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:56:55Z",
+          "updatedAt": "2021-01-08T15:56:55Z"
+        }
+      ]
     },
     {
       "number": 6,
       "id": "MDU6SXNzdWU3NDA3NjAxNjE=",
       "title": "Section 3.10: Flow control control surface",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I don't see an issue with a tunnel protocol being used without flow control. If one overwhelm either of the MASQUE client or server that is equal to congestion in the network. I think the question of flow control is a question of what mode the client want the QUIC tunnel to operate in depending on the path characteristics. In most cases I would assume an unreliable tunneling is sufficient, however over lossy links using QUIC as a reliability mechanism may be desired. I think one use case for this purpose that has been discussed in some circuits are for local repair between an endpoint in a local WIFI network, where the local network is connected to Internet over an satellite link. Local WIFI loses one like to retransmit over that local network, not end-to-end over a satellite path. In such a scenario one would need flow control as the retransmission buffering is not unlimited. So a question to the WG is if we actually need a control surface for which style of operation one are using?\r\n\r\n\r\n",
       "createdAt": "2020-11-11T13:18:27Z",
-      "updatedAt": "2020-11-11T13:18:27Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:56:58Z",
+      "closedAt": "2021-01-08T15:56:58Z",
+      "comments": [
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Since MASQUE allows reliable streams and unreliable datagrams to be mixed within a single QUIC connection, I think the collection of MASQUE documents (but not necessary the IP Proxying requirements or its implementation) needs to provide guidance on flow control decisions and implications. I have personally been assuming thus far that providing control surfaces is a better option than being opinionated on it may unintentionally preclude use-cases unnecessarily.",
+          "createdAt": "2021-01-07T22:55:44Z",
+          "updatedAt": "2021-01-07T22:55:44Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:56:58Z",
+          "updatedAt": "2021-01-08T15:56:58Z"
+        }
+      ]
     },
     {
       "number": 7,
       "id": "MDU6SXNzdWU3NDA3NjQ5Mzk=",
       "title": "Congestion Control on outer QUIC connection",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "During IETF 108 there was some discussion about turning off congestion control under the assumptions that IP traffic is congestion controlled. This is something that generally have been considered as acceptable in IETF. However, if this is considered a requirements discussion of this should be added. As this might also require extension of QUIC itself to turn off congestion control for some QUIC streams or datagrams this require discussion. ",
       "createdAt": "2020-11-11T13:25:50Z",
-      "updatedAt": "2020-11-11T13:25:50Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:57:01Z",
+      "closedAt": "2021-01-08T15:57:01Z",
+      "comments": [
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@vasilvv likely has thoughts on this.",
+          "createdAt": "2021-01-07T23:05:53Z",
+          "updatedAt": "2021-01-07T23:05:53Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:01Z",
+          "updatedAt": "2021-01-08T15:57:01Z"
+        }
+      ]
     },
     {
       "number": 8,
       "id": "MDU6SXNzdWU3NDA3NjU4NTQ=",
       "title": "Indistingushible requirement",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I think a general VPN use would result in a traffic pattern that would be distinguishable from encrypted HTTPS Web traffic. Is only wire format the goal here? Some clarification would be desirable. ",
       "createdAt": "2020-11-11T13:27:11Z",
-      "updatedAt": "2020-11-11T13:27:11Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:57:05Z",
+      "closedAt": "2021-01-08T15:57:05Z",
+      "comments": [
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "What sort of clarification would be helpful? The current text explicitly states \"Traffic analysis is out of scope for this requirement.\".",
+          "createdAt": "2021-01-07T22:56:46Z",
+          "updatedAt": "2021-01-07T22:56:46Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:05Z",
+          "updatedAt": "2021-01-08T15:57:05Z"
+        }
+      ]
     },
     {
       "number": 9,
       "id": "MDU6SXNzdWU3NDA3NjgyMjA=",
       "title": "Load balancing over multiple QUIC connections and servers?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "gloinul",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Do I interpret this section correctly that it requires a IP session to be split from a client to server over multiple QUIC connections or even two MASQUE servers? Especially if it is the later that is the case that will imply additional functionality for path selection on a sub IP session flow level to avoid reordering within such subflows. Even the first one can result in need for a reordering buffer in the server to ensure that traffic is forwarded without reordering.\r\n\r\nDoes this also need some additional concerns if someone deploys the servers under different networks, resulting in multi-homing scenarios where outgoing and returning traffic for sub-flows ends up in different paths? In general you will get some traffic steering concerns to deal with. \r\n\r\nTo me this requirement appears to potentially imply quite a bit of more functionality to work. \r\n",
       "createdAt": "2020-11-11T13:30:48Z",
-      "updatedAt": "2020-11-11T13:30:48Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:57:08Z",
+      "closedAt": "2021-01-08T15:57:08Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:08Z",
+          "updatedAt": "2021-01-08T15:57:08Z"
+        }
+      ]
     },
     {
       "number": 10,
       "id": "MDU6SXNzdWU3NDczNzM1OTY=",
       "title": "Add a requirement for extensibility",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "During IETF 109, @tfpauly suggested that an extension be added that allow deployments to negotiate that the \"full\" version of IP proxying not be implemented. Such an extension might negotiate the use of IP header compression, for example. It might be worth adding this to the requirements document.",
       "createdAt": "2020-11-20T10:29:05Z",
-      "updatedAt": "2020-11-24T19:01:17Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-08T15:57:13Z",
+      "closedAt": "2021-01-08T15:57:13Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -279,6 +377,13 @@
           "body": "I agree that \"full proxying\" is not defined, and I'd prefer to not use that term at all.\r\n\r\nRegardless of terminology, I personally think that the minimum viable product here is a system that transfers IP packets unmodified. There is a clear use case for that, and any modification to IP headers or payloads should be left to extensions (to be clear, these extensions will be incredibly useful to the performance of the overall system).",
           "createdAt": "2020-11-24T19:01:17Z",
           "updatedAt": "2020-11-24T19:01:17Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:13Z",
+          "updatedAt": "2021-01-08T15:57:13Z"
         }
       ]
     },
@@ -287,16 +392,24 @@
       "id": "MDU6SXNzdWU3NDczODI0MDU=",
       "title": "Consider removing load balancing requirement",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "During IETF 109, @martinthomson pointed out that this requirement cuts a little too much into the solution space. There seemed to be support for removing this (controversial) bit as part of the core requirements. ",
       "createdAt": "2020-11-20T10:40:59Z",
-      "updatedAt": "2020-11-20T10:40:59Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:57:18Z",
+      "closedAt": "2021-01-08T15:57:18Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:18Z",
+          "updatedAt": "2021-01-08T15:57:18Z"
+        }
+      ]
     },
     {
       "number": 12,
@@ -310,7 +423,7 @@
       "labels": [],
       "body": "The document currently states as a non-requirement:\r\n\r\n`It does not discuss how the IPs assigned are determined, managed, or translated.`\r\n\r\nHowever, at the same time there is a requirement on IP assignment. It's actually bit unclear to me what this non-requirement is meaning.\r\n\r\nFurther I think, there is more then just the proxy or client requesting an IP address. It might be okay for the proxy to select an IP address but then we maybe need a way to expose that to the client. Or the client might want to specify some restrictions about assignment like \"use the same IP for this CONNECT request than for another\" or \"make sure all my request to this/these server(s) use the same IP address\". Would be nice to either cover these things in the IP assignment requirement as well or formulate the requirement on a more high-level, e.g. require signaling to exchange information and restrictions about IP address assignments.",
       "createdAt": "2020-12-16T17:46:39Z",
-      "updatedAt": "2020-12-17T18:03:24Z",
+      "updatedAt": "2021-01-08T16:27:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -326,6 +439,76 @@
           "body": "I was more wondering about the work \"translated\" here because I think we need to discuss address translation. However, I'd probably say that if e.g. the client is providing an IP address range that would be covered for me as how the proxy \"determines\" the address. Maybe the wording is just not clear here. Maybe this needs to be explained more what the concern/intention is here. I rather, however, had the feeling that having this text might be just be unnecessary. ",
           "createdAt": "2020-12-17T18:03:24Z",
           "updatedAt": "2020-12-17T18:03:24Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I agree with @DavidSchinazi that I do not see a problem here. I do not think we need to discuss address translation; can you describe a use case that informs requirements here that would not be well-served considering the current components out-of-scope?",
+          "createdAt": "2021-01-07T23:35:42Z",
+          "updatedAt": "2021-01-07T23:35:42Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "During chartering we discussed the use case where NAT is a way to conceal the client IP address from the server for privacy purposed. In this case the client neesd to be sure that the proxy does NAT. Another case is WebRTC where the client needs to know the outfacing port and address of the proxy. These are also cases that I would like to see considered and supported and seem to be excluded by this non-requirement. On the other side I still don't understand what the purpose of this non-requirement actually is. If there is another purpose you need to be more specific. Otherwise I still propose to simply remove it.",
+          "createdAt": "2021-01-08T15:55:55Z",
+          "updatedAt": "2021-01-08T15:55:55Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I just re-read the charter text -- the only mention of NAT is \"Impacts on [...] NAT rebinding [...] are not anticipated\".\r\n\r\nI believe the current text allows for the NAT or IP/port binding to be done as extensions. All the current draft states is that it's outside the scope of the core protocol, as it is a complex and involved topic. Would you like to see a sentence afterwards that such discussion is expected to be as part of extensions?",
+          "createdAt": "2021-01-08T15:59:36Z",
+          "updatedAt": "2021-01-08T15:59:36Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak The client does not need to know that the proxy is using NAT, the client only needs to know that its assigned IP address doesn't leak privacy information. I still don't see a reason to bring NAT in scope.",
+          "createdAt": "2021-01-08T16:00:43Z",
+          "updatedAt": "2021-01-08T16:00:43Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "@achernya You need to read the text in the charter completely:\r\n\r\n`Impacts on address migration, NAT rebinding, and future multipath mechanisms of QUIC are not anticipated. However, the working group should document these impacts, or those of any other QUIC developments, if they arise.`\r\n\r\nThis paragraph of on changes or extension to QUIC which are not anticipated. This is not about any proxy function itself.\r\n",
+          "createdAt": "2021-01-08T16:10:41Z",
+          "updatedAt": "2021-01-08T16:10:41Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "@DavidSchinazi I think we are still taking past each other as we have a different IP proxying solution in mind. One solution to provide an IP address that doesn't leak privacy information is to perform NAT at the proxy. I'm not saying that this is the solution we need to end up with but I don't see a reason to rule it out from the beginning.\r\n",
+          "createdAt": "2021-01-08T16:14:01Z",
+          "updatedAt": "2021-01-08T16:14:01Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak what makes you think we're ruling it out? It being out of scope just means it doesn't need to be in the core protocol. WireGuard and IPsec both do not discuss any need for NAT, but are commonly deployed in combination with a NAT. MASQUE will be the same.",
+          "createdAt": "2021-01-08T16:20:52Z",
+          "updatedAt": "2021-01-08T16:20:52Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "The difference that I explicitly would like to see NAT in masque not as a separate function that can be deployed together with the masque proxy but as an integrated function that the proxy explicitly provides and the client explicitly can request. ",
+          "createdAt": "2021-01-08T16:23:06Z",
+          "updatedAt": "2021-01-08T16:23:06Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak I believe the charter text supports my position. We are not affecting, or impacting, QUIC developments.\r\n\r\nI think whether NAT is a separate function or not is orthogonal: extensions can be implemented as integrated or external capabilities. A client can explicitly request a capability with an extension.",
+          "createdAt": "2021-01-08T16:24:20Z",
+          "updatedAt": "2021-01-08T16:24:20Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I don't think that we reached agreement that this should only be an extension and not part of the core protocol. An even if we end up as an extension that means to me that it is not a non-requirement. I think this need more discussion with the rest of the working group (hopefully in the meeting next week).",
+          "createdAt": "2021-01-08T16:27:35Z",
+          "updatedAt": "2021-01-08T16:27:35Z"
         }
       ]
     },
@@ -334,15 +517,15 @@
       "id": "MDU6SXNzdWU3NjkxNDU5OTI=",
       "title": "Requirement on proxying unmodified packets",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The first requirement says:\r\n\r\n\"The protocol will establish Data Transports, which will be able to forward IP packets, in their unmodified entirety.\"\r\n\r\nThis reads like IP packet can only be forwarded unmodified. This seems too restrictive for a requirement, as it wouldn't even allow any kind of preconfigured compression. I'm not even sure if we need a requirement to have an option to forward unmodified. There I actually propose to just remove it for now.\r\n\r\nAlso as a side note, I find the term Data Transport not ideal. How about Forwarding Association? That term is a bit clumsy but would be clear at least for me. I guess it would be good to agree to a common terminology here.",
       "createdAt": "2020-12-16T17:52:30Z",
-      "updatedAt": "2020-12-17T18:17:05Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-08T15:57:30Z",
+      "closedAt": "2021-01-08T15:57:30Z",
       "comments": [
         {
           "author": "mirjak",
@@ -371,6 +554,13 @@
           "body": "That depends on how you build your compressor, I've implemented compressors in the past that would compress specific packets because they were the most common and let the uncommon ones go uncompressed.",
           "createdAt": "2020-12-17T18:17:05Z",
           "updatedAt": "2020-12-17T18:17:05Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:30Z",
+          "updatedAt": "2021-01-08T15:57:30Z"
         }
       ]
     },
@@ -379,15 +569,15 @@
       "id": "MDU6SXNzdWU3NjkxNDg5NTE=",
       "title": "Non-requirement on IP address extraction",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The text says\r\n\r\n`How packets are forwarded between the IP proxying connection and the physical network is out of scope. This is deliberately not specified and will be left to individual implementations.`\r\n\r\nIt's actually not really clear to me what this mean. Can you further explain?",
       "createdAt": "2020-12-16T17:56:17Z",
-      "updatedAt": "2020-12-17T18:17:53Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-08T16:25:15Z",
+      "closedAt": "2021-01-08T15:57:36Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -409,6 +599,55 @@
           "body": "To me, listing non-requirements is just as important as listing requirements. If you don't do that, you end up with infinite feature creep.",
           "createdAt": "2020-12-17T18:17:53Z",
           "updatedAt": "2020-12-17T18:17:53Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm a bit confused by the title of this issue versus the discussion. The title discusses IP *address* extraction, but the discussion is about physical network handling of the IP packets (e.g., with a TUN device or similar).\r\n\r\nI'm not sure what sorts of examples can be added here. I'm open to including the text \"Implementations can use technologies such as TAP/TUN devices, RAW sockets, or similar to accomplish this task.\" but it feels unnecessary for a requirements document.",
+          "createdAt": "2021-01-07T23:38:48Z",
+          "updatedAt": "2021-01-07T23:38:48Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:36Z",
+          "updatedAt": "2021-01-08T15:57:36Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "If this text is not about network handling as David indicated, then I still don't what the text is about (and obviously David also didn't understand it correctly) and it needed to be further explained, please!",
+          "createdAt": "2021-01-08T15:58:17Z",
+          "updatedAt": "2021-01-08T15:58:17Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak The text is about network handling; but the issue title you chose doesn't make sense to me. I believe @DavidSchinazi and I are on the same page here.",
+          "createdAt": "2021-01-08T16:10:06Z",
+          "updatedAt": "2021-01-08T16:10:06Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "Okay, looking at this again, this is clarified now in the document. However, I still don't see the point about having the non-requirement in the  document. How can this choice impact the protocol design? If there is no impact, I think we should still simply remove it.",
+          "createdAt": "2021-01-08T16:18:28Z",
+          "updatedAt": "2021-01-08T16:18:28Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I do not agree with the statement \"If there is no impact, I think we should still simply remove it.\". Like David, I think explicitly enumerating non-goals for the document is an important practice to avoid scope creep.\r\n\r\n",
+          "createdAt": "2021-01-08T16:22:07Z",
+          "updatedAt": "2021-01-08T16:22:07Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I don't understand what the scope creep is in this case if there is no impact on the protocol. You could equally have a requirement that the layer 2 technology that is used underneath IP is out of scope but that would also not really be any helpful.",
+          "createdAt": "2021-01-08T16:25:15Z",
+          "updatedAt": "2021-01-08T16:25:15Z"
         }
       ]
     },
@@ -417,15 +656,15 @@
       "id": "MDU6SXNzdWU3NjkxNTc4ODc=",
       "title": "Document organisation: which requirement only apply to IP proxying (but not UDP proxying)?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Most requirement listed actually equally apply to UDP proxying and IP proxying. I think it would be helpful to separate out those requirements that only apply to IP proxying and then have a more focused discussion about those.",
       "createdAt": "2020-12-16T18:06:56Z",
-      "updatedAt": "2020-12-17T18:19:01Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-08T16:04:15Z",
+      "closedAt": "2021-01-08T15:58:15Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -447,6 +686,27 @@
           "body": "I don't follow. This document discusses requirements for IP proxying. CONNECT-UDP has nothing to do with this.",
           "createdAt": "2020-12-17T18:19:01Z",
           "updatedAt": "2020-12-17T18:19:01Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't see an issue with the IP proxying and UDP proxying having similar, overlapping requirements documents. I would be more concerned about the final implementation/design documents if they contained redundant information.",
+          "createdAt": "2021-01-07T23:40:14Z",
+          "updatedAt": "2021-01-07T23:40:14Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this issue as CONNECT-UDP is not in scope for the draft-ietf-masque-ip-proxy-reqs.",
+          "createdAt": "2021-01-08T15:58:15Z",
+          "updatedAt": "2021-01-08T15:58:15Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I didn't request to remove the requirements; I only asked to reorganise the document a bit because I think that would greatly help the discussion to focusing on those things which are IP specific. At least @kazuho made a similar comment in the jabber during the last session. I don't think he is aware of the discussion on this issue though. Please re-open the issue as I don't think we reached any conclusion here and should simply quickly discuss this at the next meeting to get more input.",
+          "createdAt": "2021-01-08T16:04:15Z",
+          "updatedAt": "2021-01-08T16:04:15Z"
         }
       ]
     },
@@ -455,17 +715,157 @@
       "id": "MDU6SXNzdWU3NzAyNTk5Nzc=",
       "title": "Clarify terminology ",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "IP proxying and IP session and IP proxying session are used so what interchangeable in the draft. Also the use of IP session compared to Data Transport is not always clear. Do we really need both terms. I think it would helpful to be more clear about terminology. I would also prefer a term like forwarding association or maybe forwarding session.",
       "createdAt": "2020-12-17T18:08:30Z",
-      "updatedAt": "2020-12-17T18:08:30Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-01-08T15:57:43Z",
+      "closedAt": "2021-01-08T15:57:42Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
+          "createdAt": "2021-01-08T15:57:42Z",
+          "updatedAt": "2021-01-08T15:57:42Z"
+        }
+      ]
     }
   ],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 17,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTUxMjk2NDQy",
+      "title": "Incorporate feedback from the IETF 109 session",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/pull/17",
+      "state": "MERGED",
+      "author": "achernya",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR includes multiple commits addressing feedback we received during the MASQUE IETF 109 session.",
+      "createdAt": "2021-01-07T20:53:13Z",
+      "updatedAt": "2021-01-08T12:56:03Z",
+      "baseRepository": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
+      "baseRefName": "main",
+      "baseRefOid": "cb40c5cc71e5aad24dee63aea0a781059d7f5647",
+      "headRepository": "achernya/draft-ietf-masque-ip-proxy-reqs",
+      "headRefName": "achernya-109-updates",
+      "headRefOid": "049bd40dae3cc464ec8b2d5065afdf99b3269271",
+      "closedAt": "2021-01-08T12:56:03Z",
+      "mergedAt": "2021-01-08T12:56:03Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "49cb0568a38e3cc4ab16304d29db8c585d14d275"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTYzODIwODE2",
+          "commit": {
+            "abbreviatedOid": "50b650b"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-01-07T20:57:52Z",
+          "updatedAt": "2021-01-07T21:03:04Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "How do you feel about creating an extensibility requirement and moving this to a subsection there - the requirement is for the base protocol to be extensible enough to allow a load balancing extension, not to allow load balancing in the core spec",
+              "createdAt": "2021-01-07T20:57:52Z",
+              "updatedAt": "2021-01-07T23:43:42Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTYzODg2NTgy",
+          "commit": {
+            "abbreviatedOid": "0cc42b4"
+          },
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-01-07T22:50:45Z",
+          "updatedAt": "2021-01-07T22:50:45Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "Done, see the subsequent commit 0a38273",
+              "createdAt": "2021-01-07T22:50:45Z",
+              "updatedAt": "2021-01-07T23:43:42Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTY0MjM4NDI3",
+          "commit": {
+            "abbreviatedOid": "049bd40"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-01-08T12:55:55Z",
+          "updatedAt": "2021-01-08T12:55:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTUxNzQwMjI3",
+      "title": "Editorial pass",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/pull/18",
+      "state": "MERGED",
+      "author": "DavidSchinazi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-01-08T13:42:45Z",
+      "updatedAt": "2021-01-08T15:37:46Z",
+      "baseRepository": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
+      "baseRefName": "main",
+      "baseRefOid": "49cb0568a38e3cc4ab16304d29db8c585d14d275",
+      "headRepository": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
+      "headRefName": "dschinazi20210108",
+      "headRefOid": "f67ead16e5d8198c6bec918b2f889a8b23136da3",
+      "closedAt": "2021-01-08T15:37:46Z",
+      "mergedAt": "2021-01-08T15:37:46Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "917f1ba313fdd0a20cdd9055ac60e60a3fb3e807"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTY0MzMzMzQ1",
+          "commit": {
+            "abbreviatedOid": "e4f52a4"
+          },
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-01-08T15:10:37Z",
+          "updatedAt": "2021-01-08T15:11:05Z",
+          "comments": [
+            {
+              "originalPosition": 163,
+              "body": "I think \"extensions will\" probably should be weakened to \"extensions may\" or \"extensions can\"? I'm currently reading this requirement sentence as \"someone is required to define such an extension\", which I don't think we want to imply.",
+              "createdAt": "2021-01-08T15:10:37Z",
+              "updatedAt": "2021-01-08T15:13:30Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
