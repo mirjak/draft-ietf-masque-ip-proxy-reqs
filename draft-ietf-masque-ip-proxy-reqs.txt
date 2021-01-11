@@ -5,8 +5,8 @@
 Network Working Group                                  A. Chernyakhovsky
 Internet-Draft                                                 D. McCall
 Intended status: Informational                               D. Schinazi
-Expires: 12 July 2021                                         Google LLC
-                                                          8 January 2021
+Expires: 15 July 2021                                         Google LLC
+                                                         11 January 2021
 
 
          Requirements for a MASQUE Protocol to Proxy IP Traffic
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 July 2021.
+   This Internet-Draft will expire on 15 July 2021.
 
 Copyright Notice
 
@@ -83,12 +83,12 @@ Table of Contents
      3.9.  Indistinguishability
      3.10. Support HTTP/2 and HTTP/3
      3.11. Multiplexing
+     3.12. Statefulness
    4.  Extensibility
-     4.1.  Load balancing
-     4.2.  Authentication
-     4.3.  Reliable Transmission of IP Packets
-     4.4.  Configuration of Congestion and Flow Control
-     4.5.  Data Transport Compression
+     4.1.  Authentication
+     4.2.  Reliable Transmission of IP Packets
+     4.3.  Configuration of Congestion and Flow Control
+     4.4.  Data Transport Compression
    5.  Non-requirements
      5.1.  Addressing Architecture
      5.2.  Translation
@@ -282,6 +282,13 @@ Table of Contents
    multiple independent instances of IP proxying over a given HTTP
    connection.
 
+3.12.  Statefulness
+
+   The protocol should limit the amount of state a MASQUE client or
+   server needs to operate.  Keeping minimal state simplifies
+   reconnection in the presence of failures and can facilitate
+   extensibility.
+
 4.  Extensibility
 
    The protocol will provide a mechanism by which clients and servers
@@ -297,13 +304,7 @@ Table of Contents
    protocol will keep in mind to ensure it will be possible to design
    such extensions.
 
-4.1.  Load balancing
-
-   This extension would allow for load balancing of the traffic sent
-   across the IP Session, such as to another server.  This allows the IP
-   proxying mechanisms to scale-out to multiple servers.
-
-4.2.  Authentication
+4.1.  Authentication
 
    Since the protocol will offer a way to convey identity, extensions
    will allow authenticating that identity, from both the client and
@@ -313,7 +314,7 @@ Table of Contents
    could allow an endpoint to demonstrate knowledge of a cryptographic
    secret.
 
-4.3.  Reliable Transmission of IP Packets
+4.2.  Reliable Transmission of IP Packets
 
    While it is desirable to transmit IP packets unreliably in most
    cases, an extension could provide a mechanism to allow forwarding
@@ -321,14 +322,14 @@ Table of Contents
    accomplished by allowing Data Transports to run over both DATAGRAM
    and STREAM frames.
 
-4.4.  Configuration of Congestion and Flow Control
+4.3.  Configuration of Congestion and Flow Control
 
    An extension will allow exchanging congestion and flow control
    parameters to improve performance.  For example, an extension could
    disable congestion control for non-retransmitted Data Transports if
    it knows that the proxied traffic is itself congestion-controlled.
 
-4.5.  Data Transport Compression
+4.4.  Data Transport Compression
 
    While the core protocol Data Transports will transmit IP packets in
    their unmodified entirety, an extension can allow compressing these
