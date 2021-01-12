@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-01-10T00:19:24.000707+00:00",
+  "timestamp": "2021-01-12T00:22:05.090542+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "There is a question whether \"IP proxying\" means proxying an IP subnet, as opposed to proxying a single IP address. \r\n\r\nThis question was discussed on the MASQUE mailing list during the adoption call for this draft. @DavidSchinazi asked me to open a Github issue for it. \r\n\r\nThe adoption call mail thread starts at https://mailarchive.ietf.org/arch/msg/masque/cpcXQVBjpMQLbHMGpyAJCucEg3A/. I believe the first e-mail to mention the question is Magnus's at https://mailarchive.ietf.org/arch/msg/masque/5k_IUw6-A8jQi3i_q1MOtZt5Hl8/.\r\n\r\n",
       "createdAt": "2020-10-23T18:39:36Z",
-      "updatedAt": "2021-01-08T15:56:44Z",
+      "updatedAt": "2021-01-11T18:38:33Z",
       "closedAt": "2021-01-08T15:56:44Z",
       "comments": [
         {
@@ -85,6 +85,20 @@
           "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
           "createdAt": "2021-01-08T15:56:44Z",
           "updatedAt": "2021-01-08T15:56:44Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "How was this issue addressed? I think this is one of the main points we need to discuss and probably more text in the document would be useful as well.\r\n",
+          "createdAt": "2021-01-11T12:05:11Z",
+          "updatedAt": "2021-01-11T12:05:11Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue was solved by clarifying the fact that this protocol proxies IP packets, not addresses or subnets, and specifying that any route exchange is purely informational. If that didn't address your concern, I might have misunderstood the concern - in that case can you elaborate?",
+          "createdAt": "2021-01-11T18:38:33Z",
+          "updatedAt": "2021-01-11T18:38:33Z"
         }
       ]
     },
@@ -202,7 +216,7 @@
       "labels": [],
       "body": "I don't see an issue with a tunnel protocol being used without flow control. If one overwhelm either of the MASQUE client or server that is equal to congestion in the network. I think the question of flow control is a question of what mode the client want the QUIC tunnel to operate in depending on the path characteristics. In most cases I would assume an unreliable tunneling is sufficient, however over lossy links using QUIC as a reliability mechanism may be desired. I think one use case for this purpose that has been discussed in some circuits are for local repair between an endpoint in a local WIFI network, where the local network is connected to Internet over an satellite link. Local WIFI loses one like to retransmit over that local network, not end-to-end over a satellite path. In such a scenario one would need flow control as the retransmission buffering is not unlimited. So a question to the WG is if we actually need a control surface for which style of operation one are using?\r\n\r\n\r\n",
       "createdAt": "2020-11-11T13:18:27Z",
-      "updatedAt": "2021-01-08T15:56:58Z",
+      "updatedAt": "2021-01-11T18:36:41Z",
       "closedAt": "2021-01-08T15:56:58Z",
       "comments": [
         {
@@ -218,6 +232,20 @@
           "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
           "createdAt": "2021-01-08T15:56:58Z",
           "updatedAt": "2021-01-08T15:56:58Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I saw that you added a section on \"Reliable Transmission of IP Packets\" in the extension part of the document. However, the section on Flow control is unmodified. Two points:\r\n\r\n1) I'm not sure what the requirement on flow control actually requests. It says \" guidance on how best to use flow control\". As mentioned by others this is rather a matter of QUIC and I'm not sure what kind of guidance you are expecting the masque protocol?\r\n\r\n2) I'm not sure if reliability support can only be an extension. If datagram is not supported in QUIC, would you rather fail the masque connection than using streams?\r\n",
+          "createdAt": "2021-01-11T11:56:50Z",
+          "updatedAt": "2021-01-11T11:56:50Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Apologies for the lack of details, the text that was aimed at addressing this issue was the [Configuration of Congestion and Flow Control](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01#section-4.4) subsection.",
+          "createdAt": "2021-01-11T18:36:40Z",
+          "updatedAt": "2021-01-11T18:36:40Z"
         }
       ]
     },
@@ -295,8 +323,8 @@
       "labels": [],
       "body": "Do I interpret this section correctly that it requires a IP session to be split from a client to server over multiple QUIC connections or even two MASQUE servers? Especially if it is the later that is the case that will imply additional functionality for path selection on a sub IP session flow level to avoid reordering within such subflows. Even the first one can result in need for a reordering buffer in the server to ensure that traffic is forwarded without reordering.\r\n\r\nDoes this also need some additional concerns if someone deploys the servers under different networks, resulting in multi-homing scenarios where outgoing and returning traffic for sub-flows ends up in different paths? In general you will get some traffic steering concerns to deal with. \r\n\r\nTo me this requirement appears to potentially imply quite a bit of more functionality to work. \r\n",
       "createdAt": "2020-11-11T13:30:48Z",
-      "updatedAt": "2021-01-08T15:57:08Z",
-      "closedAt": "2021-01-08T15:57:08Z",
+      "updatedAt": "2021-01-11T22:53:42Z",
+      "closedAt": "2021-01-11T22:53:42Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -304,6 +332,27 @@
           "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
           "createdAt": "2021-01-08T15:57:08Z",
           "updatedAt": "2021-01-08T15:57:08Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "The scenario that the author have in mind is still not fully clear to me. Can you please further explain?",
+          "createdAt": "2021-01-11T12:07:00Z",
+          "updatedAt": "2021-01-11T12:07:00Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Reopening, @achernya can you add some text to this subsection to clarify what the intent is?",
+          "createdAt": "2021-01-11T18:39:12Z",
+          "updatedAt": "2021-01-11T18:39:12Z"
+        },
+        {
+          "author": "achernya",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The new text already includes\r\n\r\n> This allows the IP proxying mechanisms to scale-out to multiple servers\r\n\r\nIs this not clear @mirjak ",
+          "createdAt": "2021-01-11T18:45:00Z",
+          "updatedAt": "2021-01-11T18:45:00Z"
         }
       ]
     },
@@ -524,7 +573,7 @@
       "labels": [],
       "body": "The first requirement says:\r\n\r\n\"The protocol will establish Data Transports, which will be able to forward IP packets, in their unmodified entirety.\"\r\n\r\nThis reads like IP packet can only be forwarded unmodified. This seems too restrictive for a requirement, as it wouldn't even allow any kind of preconfigured compression. I'm not even sure if we need a requirement to have an option to forward unmodified. There I actually propose to just remove it for now.\r\n\r\nAlso as a side note, I find the term Data Transport not ideal. How about Forwarding Association? That term is a bit clumsy but would be clear at least for me. I guess it would be good to agree to a common terminology here.",
       "createdAt": "2020-12-16T17:52:30Z",
-      "updatedAt": "2021-01-08T15:57:30Z",
+      "updatedAt": "2021-01-11T12:08:09Z",
       "closedAt": "2021-01-08T15:57:30Z",
       "comments": [
         {
@@ -561,6 +610,13 @@
           "body": "We wrote text in [draft-ietf-masque-ip-proxy-reqs-01](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01) that should address this issue.",
           "createdAt": "2021-01-08T15:57:30Z",
           "updatedAt": "2021-01-08T15:57:30Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I think this discussion about if any kind of compression should be an extension or part of the core protocol is not concluded.",
+          "createdAt": "2021-01-11T12:08:09Z",
+          "updatedAt": "2021-01-11T12:08:09Z"
         }
       ]
     },
@@ -864,6 +920,48 @@
               "updatedAt": "2021-01-08T15:13:30Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTUyOTQ4OTc5",
+      "title": "Add additional motivation for Load Balancing",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/pull/19",
+      "state": "MERGED",
+      "author": "achernya",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The load balancing requirement was not clear to everyone, so we replaced it with a Statefulness requirement which provides better motivation and guidance while enabling our load balancing corporate goal.\r\n\r\nCloses #9.",
+      "createdAt": "2021-01-11T19:02:07Z",
+      "updatedAt": "2021-01-11T22:53:43Z",
+      "baseRepository": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
+      "baseRefName": "main",
+      "baseRefOid": "917f1ba313fdd0a20cdd9055ac60e60a3fb3e807",
+      "headRepository": "achernya/draft-ietf-masque-ip-proxy-reqs",
+      "headRefName": "load-balancing",
+      "headRefOid": "139c33bdc24612ece658dc30eb2ad88d41af3492",
+      "closedAt": "2021-01-11T22:53:43Z",
+      "mergedAt": "2021-01-11T22:53:42Z",
+      "mergedBy": "DavidSchinazi",
+      "mergeCommit": {
+        "oid": "b3b43a8aba0cc4258c70e0ea137cdd3be15f6857"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTY1ODAyODIx",
+          "commit": {
+            "abbreviatedOid": "139c33b"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-01-11T22:53:15Z",
+          "updatedAt": "2021-01-11T22:53:15Z",
+          "comments": []
         }
       ]
     }
