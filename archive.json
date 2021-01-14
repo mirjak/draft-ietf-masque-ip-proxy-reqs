@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-01-12T00:22:05.090542+00:00",
+  "timestamp": "2021-01-14T00:36:21.707078+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "There is a question whether \"IP proxying\" means proxying an IP subnet, as opposed to proxying a single IP address. \r\n\r\nThis question was discussed on the MASQUE mailing list during the adoption call for this draft. @DavidSchinazi asked me to open a Github issue for it. \r\n\r\nThe adoption call mail thread starts at https://mailarchive.ietf.org/arch/msg/masque/cpcXQVBjpMQLbHMGpyAJCucEg3A/. I believe the first e-mail to mention the question is Magnus's at https://mailarchive.ietf.org/arch/msg/masque/5k_IUw6-A8jQi3i_q1MOtZt5Hl8/.\r\n\r\n",
       "createdAt": "2020-10-23T18:39:36Z",
-      "updatedAt": "2021-01-11T18:38:33Z",
+      "updatedAt": "2021-01-12T11:29:36Z",
       "closedAt": "2021-01-08T15:56:44Z",
       "comments": [
         {
@@ -99,6 +99,13 @@
           "body": "This issue was solved by clarifying the fact that this protocol proxies IP packets, not addresses or subnets, and specifying that any route exchange is purely informational. If that didn't address your concern, I might have misunderstood the concern - in that case can you elaborate?",
           "createdAt": "2021-01-11T18:38:33Z",
           "updatedAt": "2021-01-11T18:38:33Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I was mostly referring to @gloinul comments and thinking that we probably need to say more about address validation anyway. Yes the proxy doesn't need to trust but does it decide? ",
+          "createdAt": "2021-01-12T11:29:36Z",
+          "updatedAt": "2021-01-12T11:29:36Z"
         }
       ]
     },
@@ -216,7 +223,7 @@
       "labels": [],
       "body": "I don't see an issue with a tunnel protocol being used without flow control. If one overwhelm either of the MASQUE client or server that is equal to congestion in the network. I think the question of flow control is a question of what mode the client want the QUIC tunnel to operate in depending on the path characteristics. In most cases I would assume an unreliable tunneling is sufficient, however over lossy links using QUIC as a reliability mechanism may be desired. I think one use case for this purpose that has been discussed in some circuits are for local repair between an endpoint in a local WIFI network, where the local network is connected to Internet over an satellite link. Local WIFI loses one like to retransmit over that local network, not end-to-end over a satellite path. In such a scenario one would need flow control as the retransmission buffering is not unlimited. So a question to the WG is if we actually need a control surface for which style of operation one are using?\r\n\r\n\r\n",
       "createdAt": "2020-11-11T13:18:27Z",
-      "updatedAt": "2021-01-11T18:36:41Z",
+      "updatedAt": "2021-01-12T11:36:23Z",
       "closedAt": "2021-01-08T15:56:58Z",
       "comments": [
         {
@@ -246,6 +253,13 @@
           "body": "Apologies for the lack of details, the text that was aimed at addressing this issue was the [Configuration of Congestion and Flow Control](https://tools.ietf.org/html/draft-ietf-masque-ip-proxy-reqs-01#section-4.4) subsection.",
           "createdAt": "2021-01-11T18:36:40Z",
           "updatedAt": "2021-01-11T18:36:40Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "Ah, I missed that new section. That section makes sense for congestion control but not sure what it means for flow control. You don't need flow control if you don't buffer, however, if have a reliable transport you have to retransmit and then you need flow control and buffering. So the part that should be configurable is reliability (which is covered by 4.3).\r\n\r\nMy comments above still stand. In section 3.8 on flow control it is still not clear to me what the actually requirement here is. And I still think support of a reliable mode cannot just be optional in an extension. These points have not been addressed in the last revision.",
+          "createdAt": "2021-01-12T11:36:23Z",
+          "updatedAt": "2021-01-12T11:36:23Z"
         }
       ]
     },
@@ -961,6 +975,46 @@
           "body": "",
           "createdAt": "2021-01-11T22:53:15Z",
           "updatedAt": "2021-01-11T22:53:15Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTUzODMyNjcy",
+      "title": "Try to clarify the text around unmodified",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs/pull/20",
+      "state": "OPEN",
+      "author": "ekr",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This is my attempt to clarify what I said at the microphone.\r\n\r\nMy point is that the requirement here is that you input IP datagrams in on one end and they come out unmodified on the other end. That doesn't mean that it has to appear unmodified inside QUIC. For instance, one might do header compression inside the channel. It seems like one might have extensions (e.g., NAT or v4/v6 translation) but those affect the exterior interfaces, not the channel.",
+      "createdAt": "2021-01-12T23:56:27Z",
+      "updatedAt": "2021-01-13T00:02:07Z",
+      "baseRepository": "ietf-wg-masque/draft-ietf-masque-ip-proxy-reqs",
+      "baseRefName": "main",
+      "baseRefOid": "b3b43a8aba0cc4258c70e0ea137cdd3be15f6857",
+      "headRepository": "ekr/draft-ietf-masque-ip-proxy-reqs",
+      "headRefName": "unmodified_packets",
+      "headRefOid": "541b79e57d6be82bc0e6b0054d25ca21536c64d2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTY2Nzk4MTgz",
+          "commit": {
+            "abbreviatedOid": "541b79e"
+          },
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for writing this!",
+          "createdAt": "2021-01-13T00:02:07Z",
+          "updatedAt": "2021-01-13T00:02:07Z",
           "comments": []
         }
       ]
